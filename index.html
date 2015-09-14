@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coursack | Send notification</title>
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<nav>
+    <div class="nav-wrapper">
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="#"><i class="material-icons">search</i></a></li>
+            <li><a href="#"><i class="material-icons">view_module</i></a></li>
+            <li><a href="#"><i class="material-icons">refresh</i></a></li>
+            <li><a href="#"><i class="material-icons">more_vert</i></a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="section">
+            <h5>Send notification</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <textarea id="message" class="materialize-textarea"></textarea>
+            <label for="message">Type your message here</label>
+        </div>
+        <div class="input-field col s12">
+            <select id="group">
+                <option value="0" disabled selected>All</option>
+                <option value="1">Group IG-1-11</option>
+                <option value="2">Group IG-1-11</option>
+                <option value="3">Group IG-1-11</option>
+            </select>
+            <label>Destination group</label>
+        </div>
+        <div class="input-field col s12">
+            <a id="submit" class="waves-effect waves-light btn">Send</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Just for fun!
+        $('select').material_select();
+
+        // Ajax query
+        $('#submit').click(function () {
+            var message = $('#message').val();
+            var group = $('#group').val();
+            // in the data can be more values
+            var data = "message=" + message + "&group=" + group;
+            if (message == '') {
+                alert("Please fill all fields")
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "notification.php",
+                    data: data,
+                    success: function (result) {
+                        Materialize.toast(result, 4000);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
